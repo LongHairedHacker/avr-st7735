@@ -88,6 +88,22 @@ enum ST7735_ORIENTATION {
 };
 
 void st7735_init(void);
+
 void st7735_set_orientation(enum ST7735_ORIENTATION orientation);
+
+void st7735_draw_pixel(int16_t x, int16_t y, uint16_t color);
+void st7735_fill_rect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
+
+static inline void st7735_draw_fast_vline(int16_t x, int16_t y, int16_t h, uint16_t color) {
+	st7735_fill_rect(x, y, 1, h, color);
+}
+
+static inline void st7735_draw_fast_hline(int16_t x, int16_t y, int16_t w, uint16_t color) {
+	st7735_fill_rect(x, y, w, 1, color);
+}
+
+static inline uint16_t st7735_color(uint8_t r, uint8_t g, uint8_t b) {
+  return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+}
 
 #endif

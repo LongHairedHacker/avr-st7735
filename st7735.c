@@ -44,6 +44,12 @@ static inline void st7735_write_data(uint8_t data) {
 	spi_set_cs();
 }
 
+static inline void st7735_write_color(uint16_t color) {
+	spi_write(color >> 8);
+	spi_write(color);
+}
+
+
 static inline void st7735_reset() {
 	spi_unset_cs();
 	st7735_set_rst();
@@ -228,17 +234,43 @@ void st7735_set_addr_win(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1) {
 }
 
 void st7735_draw_pixel(int16_t x, int16_t y, uint16_t color) {
-	if((x < 0) || (x >= st7735_width) || (y < 0) || (y >= st7735_height)){
+	if(x < 0 || x >= st7735_width || y < 0 || y >= st7735_height){
 		return;
 	}
-	
+
   	st7735_set_addr_win(x, y, x+1, y+1);
 
   	st7735_set_rs();
   	spi_unset_cs();
 
-	spi_write(color >> 8);
-	spi_write(color);
+	st7735_write_color(color);
 
   	spi_set_cs();
+}
+
+
+void st7735_fill_rect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color) {
+	if(x >= st7735_width || y >= st7735_height) {
+		return;
+	}
+
+	if((x + w - 1) >= st7735_width) {
+		w = st7735_width  - x;
+	}
+	if((y + h - 1) >= st7735_height) {
+		h = st7735_height - y;
+	}
+
+	st7735_set_addr_win(x, y, x + w - 1, y + h - 1);
+
+	st7735_set_rs();
+	spi_unset_cs();
+
+	for(uint8_t i = 0; i < h; i++) {
+		for(uint8_t j = 0; j < w; j++) {
+			st7735_write_color(color);
+		}
+	}
+
+	spi_set_cs();
 }
