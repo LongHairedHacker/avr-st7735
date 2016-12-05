@@ -1,0 +1,5 @@
+-I../sss7core
+-I/usr/avr/include
+-D__AVR_ATmega8__
+-DF_CPU=16000000
+-Os
