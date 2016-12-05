@@ -3,11 +3,11 @@
 
 #include<stdint.h>
 
-const uint8_t st7735_width = 128;
+const uint8_t st7735_default_width = 128;
 // for 1.44" display
-const uint8_t st7735_height_144 = 128;
+const uint8_t st7735_default_height_144 = 128;
 // for 1.8" display
-const uint8_t st7735_height_18 = 160;
+const uint8_t st7735_default_height_18 = 160;
 
 enum ST7735_DISPLAY_TYPE {
 	ST7735_BLUE,
@@ -80,6 +80,14 @@ enum ST7735_COLORS {
 	ST7735_COLOR_WHITE = 0xFFFF
 };
 
+enum ST7735_ORIENTATION {
+	ST7735_LANDSCAPE,
+	ST7735_PORTRAIT,
+	ST7735_LANDSCAPE_INV,
+	ST7735_PORTRAIT_INV
+};
+
 void st7735_init(void);
+void st7735_set_orientation(enum ST7735_ORIENTATION orientation);
 
 #endif
