@@ -5,7 +5,7 @@
 
 #include "st7735.h"
 
-const uint8_t DELAY_FLAG = (1 << 7);
+#define DELAY_FLAG 0x80
 
 static const uint8_t PROGMEM st7735_blue_init[] = {	// Initialization commands for 7735B screens
     18,                       		// 18 commands in list:

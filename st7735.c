@@ -6,26 +6,26 @@
 #include "spi.h"
 #include "st7735initcmds.h"
 
-static uint8_t st7735_row_start = 0;
-static uint8_t st7735_column_start = 0;
-static uint8_t st7735_width = st7735_default_width;
-static uint8_t st7735_height = st7735_default_height_18;
-static enum ST7735_ORIENTATION st7735_orientation = ST7735_LANDSCAPE;
+uint8_t st7735_row_start = 0;
+uint8_t st7735_column_start = 0;
+uint8_t st7735_width = 0;
+uint8_t st7735_height = 0;
+enum ST7735_ORIENTATION st7735_orientation = ST7735_LANDSCAPE;
 
 static inline void st7735_set_rs() {
-	PORTB |= (1 << PB1);
+	PORTD |= (1 << PD6);
 }
 
 static inline void st7735_unset_rs() {
-	PORTB &= ~(1 << PB1);
+	PORTD &= ~(1 << PD6);
 }
 
 static inline void st7735_set_rst() {
-	PORTB |= (1 << PB0);
+	PORTD |= (1 << PD7);
 }
 
 static inline void st7735_unset_rst() {
-	PORTB &= ~(1 << PB0);
+	PORTD &= ~(1 << PD7);
 }
 
 static inline void st7735_write_cmd(enum ST7735_COMMANDS cmd) {
@@ -81,7 +81,9 @@ void st7735_run_command_list(const uint8_t *addr) {
 				_delay_ms(500);
 			}
 			else {
-				_delay_ms(ms);
+				for(int i = 0; i < ms; i += 5) {
+					_delay_ms(5);
+				}
 			}
 
 		}
@@ -91,7 +93,7 @@ void st7735_run_command_list(const uint8_t *addr) {
 
 void st7735_init() {
 	// Set rs and rst output
-	DDRB |= (1 << PB1) | (1 << PB0);
+	DDRD |= (1 << PD6) | (1 << PD7);
 
 	st7735_reset();
 
@@ -106,12 +108,16 @@ void st7735_init() {
 			st7735_run_command_list(st7735_red_init3);
 			st7735_column_start = 2;
 			st7735_row_start = 1;
+			st7735_width = st7735_default_width;
+			st7735_height = st7735_default_height_18;
 			break;
 
 		case ST7735_RED_18_REDTAB:
 			st7735_run_command_list(st7735_red_init1);
 			st7735_run_command_list(st7735_red_init_red2);
 			st7735_run_command_list(st7735_red_init3);
+			st7735_width = st7735_default_width;
+			st7735_height = st7735_default_height_18;
 			break;
 
 		case ST7735_RED_18_BLACKTAB:
@@ -121,6 +127,8 @@ void st7735_init() {
 			// Change MADCTL color filter for black
 			st7735_write_cmd(ST7735_MADCTL);
 			st7735_write_data(0xC0);
+			st7735_width = st7735_default_width;
+			st7735_height = st7735_default_height_18;
 			break;
 
 		case ST7735_RED144_GREENTAB:
@@ -130,6 +138,8 @@ void st7735_init() {
 			st7735_height = st7735_default_height_144;
 			st7735_column_start = 2;
 			st7735_row_start = 3;
+			st7735_width = st7735_default_width;
+			st7735_height = st7735_default_height_144;
 			break;
 	}
 }
@@ -149,7 +159,7 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 	st7735_write_cmd(ST7735_MADCTL);
 
   	switch (orientation) {
-		case ST7735_LANDSCAPE:
+		case ST7735_PORTRAIT:
 		    if(st7735_type == ST7735_RED_18_BLACKTAB) {
 		    	st7735_write_data(MADCTL_MX | MADCTL_MY | MADCTL_RGB);
 		    } else {
@@ -166,7 +176,7 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			break;
 
 
-		case ST7735_PORTRAIT:
+		case ST7735_LANDSCAPE:
 			if(st7735_type == ST7735_RED_18_BLACKTAB) {
 				st7735_write_data(MADCTL_MY | MADCTL_MV | MADCTL_RGB);
 			} else {
@@ -183,7 +193,7 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			st7735_height = st7735_default_width;
 			break;
 
-		case ST7735_LANDSCAPE_INV:
+		case ST7735_PORTRAIT_INV:
 			if (st7735_type == ST7735_RED_18_BLACKTAB) {
 				st7735_write_data(MADCTL_RGB);
 			} else {
@@ -199,7 +209,7 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			}
 			break;
 
-		case ST7735_PORTRAIT_INV:
+		case ST7735_LANDSCAPE_INV:
 			if (st7735_type == ST7735_RED_18_BLACKTAB) {
 				st7735_write_data(MADCTL_MX | MADCTL_MV | MADCTL_RGB);
 			} else {
@@ -220,7 +230,7 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 void st7735_set_addr_win(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1) {
 	st7735_write_cmd(ST7735_CASET); // Column addr set
 	st7735_write_data(0x00);
-	st7735_write_cmd(x0 + st7735_column_start);	// XSTART
+	st7735_write_data(x0 + st7735_column_start);	// XSTART
 	st7735_write_data(0x00);
 	st7735_write_data(x1 + st7735_column_start); // XEND
 

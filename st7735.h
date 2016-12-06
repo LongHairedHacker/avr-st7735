@@ -3,11 +3,11 @@
 
 #include<stdint.h>
 
-const uint8_t st7735_default_width = 128;
+static const uint8_t st7735_default_width = 128;
 // for 1.44" display
-const uint8_t st7735_default_height_144 = 128;
+static const uint8_t st7735_default_height_144 = 128;
 // for 1.8" display
-const uint8_t st7735_default_height_18 = 160;
+static const uint8_t st7735_default_height_18 = 160;
 
 enum ST7735_DISPLAY_TYPE {
 	ST7735_BLUE,
@@ -17,7 +17,7 @@ enum ST7735_DISPLAY_TYPE {
 	ST7735_RED144_GREENTAB
 };
 
-const enum ST7735_DISPLAY_TYPE st7735_type = ST7735_RED_18_REDTAB;
+static const enum ST7735_DISPLAY_TYPE st7735_type = ST7735_RED_18_BLACKTAB;
 
 
 // ST7735 commands

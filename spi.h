@@ -3,7 +3,7 @@
 
 #include<avr/io.h>
 
-void SPI_init(void);
+void spi_init(void);
 
 static inline void spi_write(uint8_t byte) {
 	SPDR = byte;
