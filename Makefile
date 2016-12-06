@@ -4,7 +4,8 @@ ISPPORT ?= /dev/kaboard
 
 VERSION = 0.1
 
-HEADERS = spi.h st7735.h st7735initcmds.h
+HEADERS = include/spi.h include/st7735.h include/st7735initcmds.h
+HEADERS += images/logo_bw.h images/logo.h
 SRC = main.c spi.c st7735.c
 TARGET = st7735_test
 OBJDIR = bin
@@ -17,7 +18,7 @@ SIZE = avr-size
 SRC_TMP = $(subst ../,,$(SRC))
 OBJ = $(SRC_TMP:%.c=$(OBJDIR)/$(AVRMCU)/%.o)
 
-CFLAGS = -I ../sss7core/ -Os -Wall -Wstrict-prototypes
+CFLAGS = -I include -I images -Os -Wall -Wstrict-prototypes
 CFLAGS += -ffunction-sections -fdata-sections
 CFLAGS += -fshort-enums -fpack-struct -funsigned-char -funsigned-bitfields
 CFLAGS += -mmcu=$(AVRMCU) -DF_CPU=$(F_CPU)UL -DVERSION=$(VERSION)
@@ -32,6 +33,12 @@ start:
 	@echo "=========================="
 	@echo ":: Building for $(AVRMCU)"
 	@echo ":: MCU operating frequency is $(F_CPU)Hz"
+
+images/logo.h : images/logo.png utils/img_convert.py
+	python3 utils/img_convert.py $< $@
+
+images/logo_bw.h : images/logo_bw.png utils/img_convert_mono.py
+	python3 utils/img_convert_mono.py $< $@
 
 $(OBJDIR)/$(AVRMCU)/%.o : %.c $(HEADERS) Makefile
 	@mkdir -p $$(dirname $@)
@@ -50,6 +57,7 @@ size : $(OBJDIR)/$(AVRMCU)/$(TARGET).elf
 
 clean :
 	@rm -rf $(OBJDIR)
+	@rm images/*.h
 
 flash : all
 	avrdude -c arduino \

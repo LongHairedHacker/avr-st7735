@@ -103,7 +103,7 @@ static const uint8_t PROGMEM st7735_red_init1[] = { // Init for 7735R, part 1 (r
       	0xC8,                   //     row addr/col addr, bottom to top refresh
     ST7735_COLMOD, 1,  			// 15: set color mode, 1 arg, no delay:
       	0x05					//     16-bit color
-  };
+};
 
 static const uint8_t PROGMEM st7735_red_init_green2[] = { // Init for 7735R, part 2 (green tab only)
     2,                        	//  2 commands in list:
@@ -113,7 +113,7 @@ static const uint8_t PROGMEM st7735_red_init_green2[] = { // Init for 7735R, par
     ST7735_RASET, 4,  			//  2: Row addr set, 4 args, no delay:
       	0x00, 0x01,             //     XSTART = 0
       	0x00, 0x9F+0x01			//     XEND = 159
- };
+};
 
  static const uint8_t PROGMEM st7735_red_init_red2[] = { // Init for 7735R, part 2 (red tab only)
     2,                 	//  2 commands in list:

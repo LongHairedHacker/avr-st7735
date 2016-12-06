@@ -1,6 +1,8 @@
 #ifndef _ST7735_H_
 #define _ST7735_H_
 
+#include <avr/pgmspace.h>
+
 #include<stdint.h>
 
 static const uint8_t st7735_default_width = 128;
@@ -91,19 +93,23 @@ void st7735_init(void);
 
 void st7735_set_orientation(enum ST7735_ORIENTATION orientation);
 
-void st7735_draw_pixel(int16_t x, int16_t y, uint16_t color);
-void st7735_fill_rect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
+void st7735_draw_pixel(uint8_t x, uint8_t y, uint16_t color);
+void st7735_fill_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
 
-static inline void st7735_draw_fast_vline(int16_t x, int16_t y, int16_t h, uint16_t color) {
+static inline void st7735_draw_fast_vline(uint8_t x, uint8_t y, uint8_t h, uint16_t color) {
 	st7735_fill_rect(x, y, 1, h, color);
 }
 
-static inline void st7735_draw_fast_hline(int16_t x, int16_t y, int16_t w, uint16_t color) {
+static inline void st7735_draw_fast_hline(uint8_t x, uint8_t y, uint8_t w, uint16_t color) {
 	st7735_fill_rect(x, y, w, 1, color);
 }
 
 static inline uint16_t st7735_color(uint8_t r, uint8_t g, uint8_t b) {
   return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
 }
+
+void st7735_draw_bitmap(uint8_t x, uint8_t y, PGM_P bitmap);
+
+void st7735_draw_mono_bitmap(uint8_t x, uint8_t y, PGM_P bitmap, uint16_t color_set, uint16_t color_unset);
 
 #endif
