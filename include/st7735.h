@@ -93,7 +93,7 @@ void st7735_init(void);
 
 void st7735_set_orientation(enum ST7735_ORIENTATION orientation);
 
-void st7735_draw_pixel(uint8_t x, uint8_t y, uint16_t color);
+void st7735_draw_pixel(int16_t x, int16_t y, uint16_t color);
 void st7735_fill_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
 
 static inline void st7735_draw_fast_vline(uint8_t x, uint8_t y, uint8_t h, uint16_t color) {

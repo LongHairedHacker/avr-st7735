@@ -5,8 +5,8 @@ ISPPORT ?= /dev/kaboard
 VERSION = 0.1
 
 HEADERS = include/spi.h include/st7735.h include/st7735initcmds.h
-HEADERS += images/logo_bw.h images/logo.h
-SRC = main.c spi.c st7735.c
+HEADERS += images/logo_bw.h images/logo.h include/st7735_gfx.h
+SRC = main.c spi.c st7735.c st7735_gfx.c
 TARGET = st7735_test
 OBJDIR = bin
 

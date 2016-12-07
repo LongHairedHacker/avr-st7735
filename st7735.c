@@ -243,7 +243,7 @@ void st7735_set_addr_win(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1) {
 	st7735_write_cmd(ST7735_RAMWR); // write to RAM
 }
 
-void st7735_draw_pixel(uint8_t x, uint8_t y, uint16_t color) {
+void st7735_draw_pixel(int16_t x, int16_t y, uint16_t color) {
 	if(x < 0 || x >= st7735_width || y < 0 || y >= st7735_height){
 		return;
 	}
