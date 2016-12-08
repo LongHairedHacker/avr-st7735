@@ -1,5 +1,6 @@
 -Iinclude
 -Iimages
+-Ifonts
 -I/usr/avr/include
 -D__AVR_ATmega8__
 -DF_CPU=16000000

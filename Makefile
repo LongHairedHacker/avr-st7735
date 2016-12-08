@@ -6,7 +6,8 @@ VERSION = 0.1
 
 HEADERS = include/spi.h include/st7735.h include/st7735initcmds.h
 HEADERS += images/logo_bw.h images/logo.h include/st7735_gfx.h
-SRC = main.c spi.c st7735.c st7735_gfx.c
+HEADERS += include/st7735_font.h fonts/tom_thumb.h
+SRC = main.c spi.c st7735.c st7735_gfx.c st7735_font.c
 TARGET = st7735_test
 OBJDIR = bin
 
@@ -18,7 +19,7 @@ SIZE = avr-size
 SRC_TMP = $(subst ../,,$(SRC))
 OBJ = $(SRC_TMP:%.c=$(OBJDIR)/$(AVRMCU)/%.o)
 
-CFLAGS = -I include -I images -Os -Wall -Wstrict-prototypes
+CFLAGS = -I include -I images -I fonts -Os -Wall -Wstrict-prototypes
 CFLAGS += -ffunction-sections -fdata-sections
 CFLAGS += -fshort-enums -fpack-struct -funsigned-char -funsigned-bitfields
 CFLAGS += -mmcu=$(AVRMCU) -DF_CPU=$(F_CPU)UL -DVERSION=$(VERSION)

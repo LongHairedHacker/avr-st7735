@@ -4,9 +4,12 @@
 #include "spi.h"
 #include "st7735.h"
 #include "st7735_gfx.h"
+#include "st7735_font.h"
 
-#include "logo.h"
+//#include "logo.h"
 #include "logo_bw.h"
+
+#include "tom_thumb.h"
 
 int main(void) {
     spi_init();
@@ -17,7 +20,7 @@ int main(void) {
 
     st7735_draw_mono_bitmap(0, 0, &logo_bw, ST7735_COLOR_WHITE, ST7735_COLOR_BLACK);
 
-    st7735_draw_bitmap(10, 10, &logo);
+    //st7735_draw_bitmap(10, 10, &logo);
 
 
     for(uint8_t x = 8; x <= 160; x += 8) {
@@ -43,6 +46,12 @@ int main(void) {
         h += 16;
         w += 20;
     }
+
+    _delay_ms(1000);
+    st7735_fill_rect(0, 0, 160, 128, ST7735_COLOR_BLACK);
+
+    st7735_draw_text(10, 30, "This is\nJust a Test", &TomThumb, 3, ST7735_COLOR_CYAN);
+    st7735_draw_fast_hline(10, 30, 100, ST7735_COLOR_RED);
 
     while(1);
 }
