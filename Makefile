@@ -6,7 +6,7 @@ VERSION = 0.1
 
 HEADERS = include/spi.h include/st7735.h include/st7735initcmds.h
 HEADERS += images/logo_bw.h images/logo.h include/st7735_gfx.h
-HEADERS += include/st7735_font.h fonts/tom_thumb.h
+HEADERS += include/st7735_font.h fonts/tom_thumb.h fonts/free_sans.h
 SRC = main.c spi.c st7735.c st7735_gfx.c st7735_font.c
 TARGET = st7735_test
 OBJDIR = bin
