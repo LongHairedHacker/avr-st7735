@@ -19,7 +19,7 @@ int main(void) {
     st7735_set_orientation(ST7735_LANDSCAPE);
     st7735_fill_rect(0, 0, 160, 128, ST7735_COLOR_BLACK);
 
-    st7735_draw_mono_bitmap(16, 4, &logo_bw, ST7735_COLOR_WHITE, ST7735_COLOR_BLACK);
+    st7735_draw_mono_bitmap(16, 4, (PGM_P) logo_bw, ST7735_COLOR_WHITE, ST7735_COLOR_BLACK);
 
     //st7735_draw_bitmap(10, 10, &logo);
 
