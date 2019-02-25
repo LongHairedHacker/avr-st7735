@@ -19,7 +19,7 @@ SIZE = avr-size
 SRC_TMP = $(subst ../,,$(SRC))
 OBJ = $(SRC_TMP:%.c=$(OBJDIR)/$(AVRMCU)/%.o)
 
-CFLAGS = -I include -I images -I fonts -Os -Wall -Wstrict-prototypes
+CFLAGS = -I include -I images -I fonts -Os -Wall -Wstrict-prototypes --std=c99
 CFLAGS += -ffunction-sections -fdata-sections
 CFLAGS += -fshort-enums -fpack-struct -funsigned-char -funsigned-bitfields
 CFLAGS += -mmcu=$(AVRMCU) -DF_CPU=$(F_CPU)UL -DVERSION=$(VERSION)
