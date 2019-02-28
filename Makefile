@@ -2,7 +2,7 @@ AVRMCU ?= atmega8
 F_CPU ?= 16000000
 ISPPORT ?= /dev/kaboard
 
-VERSION = 0.1
+VERSION = 0.2
 
 HEADERS = include/spi.h include/st7735.h include/st7735initcmds.h
 HEADERS += images/logo_bw.h images/logo.h include/st7735_gfx.h
