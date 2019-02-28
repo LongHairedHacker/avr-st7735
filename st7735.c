@@ -188,6 +188,7 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 		    }
 
 		    if(st7735_type == ST7735_RED144_JAYCAR) {
+			st7735_column_start = 32;
 			st7735_row_start = 32;
 		    }
 			break;
@@ -234,6 +235,11 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			} else {
 				st7735_height = st7735_default_height_18;
 			}
+
+			if(st7735_type == ST7735_RED144_JAYCAR) {
+				st7735_column_start = 0;
+			}
+
 			break;
 
 		case ST7735_LANDSCAPE_INV:
@@ -250,6 +256,10 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 				st7735_width = st7735_default_height_144;
 			} else {
 				st7735_width = st7735_default_height_18;
+			}
+
+			if(st7735_type == ST7735_RED144_JAYCAR) {
+				st7735_column_start = 0;
 			}
 
 			st7735_height = st7735_default_width;
