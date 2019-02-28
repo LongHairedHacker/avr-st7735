@@ -188,7 +188,7 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 		    }
 
 		    if(st7735_type == ST7735_RED144_JAYCAR) {
-			st7735_column_start = 32;
+			st7735_column_start = 0;
 			st7735_row_start = 32;
 		    }
 			break;
