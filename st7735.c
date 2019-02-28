@@ -132,19 +132,19 @@ void st7735_init() {
 			break;
 
 		case ST7735_RED144_GREENTAB:
-                        st7735_height = st7735_default_height_144;
-                        st7735_column_start = 2;
-                        st7735_row_start = 3;
+			st7735_height = st7735_default_height_144;
+			st7735_column_start = 2;
+			st7735_row_start = 3;
 			st7735_run_command_list(st7735_red_init1);
 			st7735_run_command_list(st7735_red_init_green1442);
 			st7735_run_command_list(st7735_red_init3);
 			st7735_width = st7735_default_width;
 			st7735_height = st7735_default_height_144;
 			break;
-                case ST7735_RED144_JAYCAR:
-                        st7735_height = st7735_default_height_144;
-                        st7735_column_start = 32;
-                        st7735_row_start = 0;
+		case ST7735_RED144_JAYCAR:
+			st7735_height = st7735_default_height_144;
+			st7735_column_start = 32;
+			st7735_row_start = 0;
 			st7735_run_command_list(st7735_red_init1);
 			st7735_run_command_list(st7735_red_init_green1442);
 			st7735_run_command_list(st7735_red_init3);
@@ -179,17 +179,17 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			st7735_width  = st7735_default_width;
 
 		    if(
-                        st7735_type == ST7735_RED144_GREENTAB ||
-                        st7735_type == ST7735_RED144_JAYCAR
-                    ) {
-                        st7735_height = st7735_default_height_144;
+			    st7735_type == ST7735_RED144_GREENTAB ||
+			    st7735_type == ST7735_RED144_JAYCAR
+		    ) {
+			st7735_height = st7735_default_height_144;
 		    } else {
-		    	st7735_height = st7735_default_height_18;
-		        }
+			st7735_height = st7735_default_height_18;
+		    }
 
-                    if(st7735_type == ST7735_RED144_JAYCAR) {
-                            st7735_row_start = 32;
-                    }
+		    if(st7735_type == ST7735_RED144_JAYCAR) {
+			st7735_row_start = 32;
+		    }
 			break;
 
 
@@ -200,19 +200,19 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 				st7735_write_data(MADCTL_MY | MADCTL_MV | MADCTL_BGR);
 			}
 
-		        if(
-                            st7735_type == ST7735_RED144_GREENTAB ||
-                            st7735_type == ST7735_RED144_JAYCAR
-                        ) {
+			if(
+				st7735_type == ST7735_RED144_GREENTAB ||
+				st7735_type == ST7735_RED144_JAYCAR
+			) {
 				st7735_width = st7735_default_height_144;
 			}
 			else {
 				st7735_width = st7735_default_height_18;
 			}
 
-                        if(st7735_type == ST7735_RED144_JAYCAR) {
-                                st7735_column_start = 32;
-                        }
+			if(st7735_type == ST7735_RED144_JAYCAR) {
+			    st7735_column_start = 32;
+			}
 
 			st7735_height = st7735_default_width;
 			break;
@@ -226,10 +226,10 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 
 			st7735_width  = st7735_default_width;
 
-		        if(
-                            st7735_type == ST7735_RED144_GREENTAB ||
-                            st7735_type == ST7735_RED144_JAYCAR
-                        ) {
+			if(
+				st7735_type == ST7735_RED144_GREENTAB ||
+				st7735_type == ST7735_RED144_JAYCAR
+			) {
 				st7735_height = st7735_default_height_144;
 			} else {
 				st7735_height = st7735_default_height_18;
@@ -243,10 +243,10 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 				st7735_write_data(MADCTL_MX | MADCTL_MV | MADCTL_BGR);
 			}
 
-		        if(
-                            st7735_type == ST7735_RED144_GREENTAB ||
-                            st7735_type == ST7735_RED144_JAYCAR
-                        ) {
+			if(
+				st7735_type == ST7735_RED144_GREENTAB ||
+				st7735_type == ST7735_RED144_JAYCAR
+			) {
 				st7735_width = st7735_default_height_144;
 			} else {
 				st7735_width = st7735_default_height_18;
@@ -321,19 +321,19 @@ void st7735_draw_bitmap(uint8_t x, uint8_t y, PGM_P bitmap) {
 	bitmap += 2;
 	uint8_t h = pgm_read_word(bitmap);
 	bitmap += 2;
-        uint8_t max_x = x + w - 1;
-        uint8_t max_y = y + h - 1;
+	uint8_t max_x = x + w - 1;
+	uint8_t max_y = y + h - 1;
 
 	if(x >= st7735_width || y >= st7735_height) {
 		return;
 	}
 
 	if(max_x >= st7735_width) {
-            max_x = st7735_width - 1;
+		max_x = st7735_width - 1;
 	}
 
 	if(max_y >= st7735_height) {
-            max_y = st7735_height - 1;
+		max_y = st7735_height - 1;
 	}
 
 	st7735_set_addr_win(x, y, max_x, max_y);
@@ -343,10 +343,10 @@ void st7735_draw_bitmap(uint8_t x, uint8_t y, PGM_P bitmap) {
 
 	for(uint8_t i = 0; i < h; i++) {
 		for(uint8_t j = 0; j < w; j++) {
-                        if((x + j) >= st7735_width || (y + i) >= st7735_height) {
-                            bitmap += 2;
-                            continue;
-                        }
+			if((x + j) >= st7735_width || (y + i) >= st7735_height) {
+				bitmap += 2;
+				continue;
+			}
 			uint16_t color = pgm_read_word(bitmap);
 			st7735_write_color(color);
 			bitmap += 2;
@@ -359,19 +359,19 @@ void st7735_draw_bitmap(uint8_t x, uint8_t y, PGM_P bitmap) {
 void st7735_draw_mono_bitmap(uint8_t x, uint8_t y, PGM_P bitmap, uint16_t color_set, uint16_t color_unset) {
 	uint8_t w = pgm_read_byte(bitmap++);
 	uint8_t h = pgm_read_byte(bitmap++);
-        uint8_t max_x = x + w - 1;
-        uint8_t max_y = y + h - 1;
+	uint8_t max_x = x + w - 1;
+	uint8_t max_y = y + h - 1;
 
 	if(x >= st7735_width || y >= st7735_height) {
 		return;
 	}
 
 	if(max_x >= st7735_width) {
-            max_x = st7735_width - 1;
+		max_x = st7735_width - 1;
 	}
 
 	if(max_y >= st7735_height) {
-            max_y = st7735_height - 1;
+		max_y = st7735_height - 1;
 	}
 
 	st7735_set_addr_win(x, y, max_x, max_y);
@@ -384,13 +384,13 @@ void st7735_draw_mono_bitmap(uint8_t x, uint8_t y, PGM_P bitmap, uint16_t color_
 	for(uint8_t i = 0; i < h; i++) {
 		for(uint8_t j = 0; j < w; j++) {
 			if(bit_pos % 8 == 0) {
-                            byte = pgm_read_byte(bitmap++);
+				byte = pgm_read_byte(bitmap++);
 			}
 
-                        if((x + j) >= st7735_width || (y + i) >= st7735_height) {
-                            bit_pos++;
-                            continue;
-                        }
+			if((x + j) >= st7735_width || (y + i) >= st7735_height) {
+				bit_pos++;
+				continue;
+			}
 			if(byte & (1 << (bit_pos % 8))) {
 				st7735_write_color(color_set);
 			}
