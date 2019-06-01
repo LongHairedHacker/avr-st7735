@@ -6,6 +6,8 @@
 #include "spi.h"
 #include "st7735initcmds.h"
 
+uint8_t st7735_screen_row_start = 0;
+uint8_t st7735_screen_column_start = 0;
 uint8_t st7735_row_start = 0;
 uint8_t st7735_column_start = 0;
 uint8_t st7735_width = 0;
@@ -106,8 +108,8 @@ void st7735_init() {
 			st7735_run_command_list(st7735_red_init1);
 			st7735_run_command_list(st7735_red_init_green2);
 			st7735_run_command_list(st7735_red_init3);
-			st7735_column_start = 2;
-			st7735_row_start = 1;
+			st7735_column_start = st7735_screen_column_start = 2;
+			st7735_row_start = st7735_screen_row_start = 1;
 			st7735_width = st7735_default_width;
 			st7735_height = st7735_default_height_18;
 			break;
@@ -133,8 +135,8 @@ void st7735_init() {
 
 		case ST7735_RED144_GREENTAB:
 			st7735_height = st7735_default_height_144;
-			st7735_column_start = 2;
-			st7735_row_start = 3;
+			st7735_column_start = st7735_screen_column_start = 2;
+			st7735_row_start = st7735_screen_row_start = 3;
 			st7735_run_command_list(st7735_red_init1);
 			st7735_run_command_list(st7735_red_init_green1442);
 			st7735_run_command_list(st7735_red_init3);
@@ -143,8 +145,8 @@ void st7735_init() {
 			break;
 		case ST7735_RED144_JAYCAR:
 			st7735_height = st7735_default_height_144;
-			st7735_column_start = 32;
-			st7735_row_start = 0;
+			st7735_column_start = st7735_screen_column_start = 0;
+			st7735_row_start = st7735_screen_row_start = 32;
 			st7735_run_command_list(st7735_red_init1);
 			st7735_run_command_list(st7735_red_init_green1442);
 			st7735_run_command_list(st7735_red_init3);
@@ -187,10 +189,8 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			st7735_height = st7735_default_height_18;
 		    }
 
-		    if(st7735_type == ST7735_RED144_JAYCAR) {
-			st7735_column_start = 0;
-			st7735_row_start = 32;
-		    }
+			st7735_column_start = st7735_screen_column_start;
+			st7735_row_start = st7735_screen_row_start;
 			break;
 
 
@@ -216,6 +216,8 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			}
 
 			st7735_height = st7735_default_width;
+			st7735_column_start = st7735_screen_row_start;
+			st7735_row_start = st7735_screen_column_start;
 			break;
 
 		case ST7735_PORTRAIT_INV:
@@ -239,6 +241,8 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			if(st7735_type == ST7735_RED144_JAYCAR) {
 				st7735_column_start = 0;
 			}
+			st7735_column_start = st7735_screen_column_start;
+			st7735_row_start = st7735_screen_row_start;
 
 			break;
 
@@ -263,6 +267,8 @@ void st7735_set_orientation(enum ST7735_ORIENTATION orientation) {
 			}
 
 			st7735_height = st7735_default_width;
+			st7735_column_start = st7735_screen_row_start;
+			st7735_row_start = st7735_screen_column_start;
 			break;
 	}
 }

@@ -14,6 +14,26 @@ int main(void) {
     st7735_init();
 
     st7735_set_orientation(ST7735_LANDSCAPE);
+    st7735_fill_rect(0, 0, 160, 128, ST7735_COLOR_RED);
+
+    _delay_ms(1000);
+
+    st7735_set_orientation(ST7735_PORTRAIT);
+    st7735_fill_rect(0, 0, 128, 160, ST7735_COLOR_BLUE);
+
+    _delay_ms(1000);
+
+    st7735_set_orientation(ST7735_LANDSCAPE_INV);
+    st7735_fill_rect(0, 0, 160, 128, ST7735_COLOR_YELLOW);
+
+    _delay_ms(1000);
+
+    st7735_set_orientation(ST7735_PORTRAIT_INV);
+    st7735_fill_rect(0, 0, 128, 160, ST7735_COLOR_GREEN);
+
+    _delay_ms(1000);
+
+    st7735_set_orientation(ST7735_LANDSCAPE);
     st7735_fill_rect(0, 0, 160, 128, ST7735_COLOR_BLACK);
 
     st7735_draw_mono_bitmap(16, 4, (PGM_P) logo_bw, ST7735_COLOR_WHITE, ST7735_COLOR_BLACK);
