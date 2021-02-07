@@ -10,14 +10,19 @@ HEADERS += include/st7735_font.h fonts/tom_thumb.h fonts/free_sans.h
 SRC = main.c spi.c st7735.c st7735_gfx.c st7735_font.c
 TARGET = st7735_test
 OBJDIR = bin
+LIB_TARGET = libst7735
+LIB_SRC = spi.c st7735.c st7735_gfx.c st7735_font.c
 
 CC = avr-gcc
+AR = ar
 OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
 SIZE = avr-size
 
 SRC_TMP = $(subst ../,,$(SRC))
 OBJ = $(SRC_TMP:%.c=$(OBJDIR)/$(AVRMCU)/%.o)
+LIB_SRC_TMP = $(subst ../,,$(LIB_SRC))
+LIB_OBJ = $(LIB_SRC_TMP:%.c=$(OBJDIR)/$(AVRMCU)/%.o)
 
 CFLAGS = -I include -I images -I fonts -Os -Wall -Wstrict-prototypes --std=c99
 CFLAGS += -ffunction-sections -fdata-sections
@@ -26,7 +31,9 @@ CFLAGS += -mmcu=$(AVRMCU) -DF_CPU=$(F_CPU)UL -DVERSION=$(VERSION)
 
 LDFLAGS = -mmcu=$(AVRMCU) -Wl,--gc-sections
 
-all: start $(OBJDIR)/$(AVRMCU)/$(TARGET).hex size
+ARFLAGS = -rc
+
+all: start $(OBJDIR)/$(AVRMCU)/$(TARGET).hex $(OBJDIR)/$(AVRMCU)/$(LIB_TARGET).a size
 	@echo ":: Done !"
 
 start:
@@ -47,6 +54,9 @@ $(OBJDIR)/$(AVRMCU)/%.o : %.c $(HEADERS) Makefile
 
 $(OBJDIR)/$(AVRMCU)/$(TARGET).elf : $(OBJ)
 	$(CC) $(LDFLAGS) $+ -o $@
+
+$(OBJDIR)/$(AVRMCU)/$(LIB_TARGET).a : $(LIB_OBJ)
+	$(AR) $(ARFLAGS) $@ $+
 
 $(OBJDIR)/$(AVRMCU)/$(TARGET).hex : $(OBJDIR)/$(AVRMCU)/$(TARGET).elf
 	$(OBJCOPY) -O ihex $< $@
