@@ -1,6 +1,9 @@
 ST7735 for AVR
 ==============
 
+**Please note: This repository is archived. However barskern has kindly agreed to continue maintaining this library. Please go to: https://github.com/barskern/avr-st7735 for the latest version as well for issues and pull requests.**
+
+
 ![example of working display](./images/example.jpg)
 
 My simplified plain C version of https://github.com/adafruit/Adafruit-ST7735-Library
